@@ -40,6 +40,7 @@ $_['text_manufacturer']                = '品牌管理';
 $_['text_module']                      = '模块配置';
 $_['text_option']                      = '商品选项';
 $_['text_order']                       = '订单管理';
+$_['text_deliveryman']                 = '配送员';
 $_['text_order_status']                = '订单状态';
 $_['text_opencart']                    = '官方网站';
 $_['text_payment']                     = '支付管理';
