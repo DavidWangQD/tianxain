@@ -1,0 +1,38 @@
+#config file
+/config.php
+/admin/config.php
+
+#blog section
+/blog/
+
+#css files
+/catalog/view/theme/default/stylesheet/*.css
+/catalog/view/theme/oktagon/stylesheet/*.css
+/catalog/view/theme/responsive/stylesheet/*.css
+
+#log files
+/system/logs/
+
+#cache files
+/system/cache/
+
+#image files
+/image
+/image/
+
+#download files
+/download/
+
+#compile less file --- theme.lock
+/catalog/view/theme/default/load/theme.lock
+/catalog/view/theme/oktagon/load/theme.lock
+/catalog/view/theme/responsive/load/theme.lock
+
+#vqmod files
+/vqmod/mods.cache
+/vqmod/logs/
+/vqmod/vqcache/
+
+#.idea
+/.idea/
+
