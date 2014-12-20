@@ -65,3 +65,36 @@ $(document).ready(function() {
 		$(this).removeClass('hover');
 	});	
 });
+
+/* added by david */
+
+function makeFilterURL(baseURL) {
+
+    var filterName;
+    var filterValue;
+
+    $("input[name^='filter']").each(function(){
+
+        filterName = $(this).attr('name');
+        filterValue = $(this).val();
+
+        if(filterValue) {
+            baseURL = baseURL + '&'+filterName+'=' + encodeURIComponent(filterValue);
+        }
+
+    });
+
+    $("select[name^='filter']").each(function(){
+
+        filterName = $(this).attr('name');
+        filterValue = $(this).val();
+
+        if(filterValue !== 'all') {
+            baseURL = baseURL + '&'+filterName+'=' + encodeURIComponent(filterValue);
+        }
+
+    });
+
+    return baseURL;
+
+}
