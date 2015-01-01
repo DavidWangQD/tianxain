@@ -286,7 +286,7 @@ class ControllerSaleOrder extends Controller {
 
 		$this->data['breadcrumbs'][] = array(
 			'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('sale/order', 'token=' . $this->session->data['token'] . $url, 'SSL'),
+			'href'      => $this->url->link('sale/order', 'token=' . $this->session->data['token'], 'SSL'),
 			'separator' => ' :: '
 		);
 
@@ -330,7 +330,7 @@ class ControllerSaleOrder extends Controller {
 
 			$this->data['orders'][] = array(
 				'order_id'      => $result['order_id'],
-				'customer'      => $result['customer'],
+				'customer'      => $result['firstname'],
 				'status'        => $result['status'],
 				'total'         => $this->currency->format($result['total'], $result['currency_code'], $result['currency_value']),
 				'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
@@ -357,6 +357,9 @@ class ControllerSaleOrder extends Controller {
 		$this->data['button_insert'] = $this->language->get('button_insert');
 		$this->data['button_delete'] = $this->language->get('button_delete');
 		$this->data['button_filter'] = $this->language->get('button_filter');
+		$this->data['button_clear_filter'] = $this->language->get('button_clear_filter');
+
+        $this->data['clear_filter'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'], 'SSL');
 
 		$this->data['token'] = $this->session->data['token'];
 
@@ -484,6 +487,11 @@ class ControllerSaleOrder extends Controller {
 	}
 
 	public function getForm() {
+
+        $this->load->model('sale/deliveryman');
+
+        $this->data['deliverymans'] = $this->model_sale_deliveryman->deliverymans()->rows;
+
 		$this->load->model('sale/customer');
 
 		$this->data['heading_title'] = $this->language->get('heading_title');
@@ -1089,6 +1097,14 @@ class ControllerSaleOrder extends Controller {
 			$this->data['shipping_code'] = '';
 		}
 
+        if (isset($this->request->post['deliveryman_id'])) {
+            $this->data['deliveryman_id'] = $this->request->post['deliveryman_id'];
+        } elseif (!empty($order_info)) {
+            $this->data['deliveryman_id'] = $order_info['deliveryman_id'];
+        } else {
+            $this->data['deliveryman_id'] = 0;
+        }
+
 		if (isset($this->request->post['order_product'])) {
 			$order_products = $this->request->post['order_product'];
 		} elseif (isset($this->request->get['order_id'])) {
@@ -1177,9 +1193,9 @@ class ControllerSaleOrder extends Controller {
 			$this->error['lastname'] = $this->language->get('error_lastname');
 		}
 
-		if ((utf8_strlen($this->request->post['email']) > 96) || (!preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $this->request->post['email']))) {
+		/*if ((utf8_strlen($this->request->post['email']) > 96) || (!preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $this->request->post['email']))) {
 			$this->error['email'] = $this->language->get('error_email');
-		}
+		}*/
 
 		if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
 			$this->error['telephone'] = $this->language->get('error_telephone');
@@ -1213,18 +1229,18 @@ class ControllerSaleOrder extends Controller {
 			// VAT Validation
 			$this->load->helper('vat');
 
-			if ($this->config->get('config_vat') && $this->request->post['payment_tax_id'] && (vat_validation($country_info['iso_code_2'], $this->request->post['payment_tax_id']) == 'invalid')) {
+			/*if ($this->config->get('config_vat') && $this->request->post['payment_tax_id'] && (vat_validation($country_info['iso_code_2'], $this->request->post['payment_tax_id']) == 'invalid')) {
 				$this->error['payment_tax_id'] = $this->language->get('error_vat');
-			}
+			}*/
 		}
 
-		if ($this->request->post['payment_country_id'] == '') {
+		/*if ($this->request->post['payment_country_id'] == '') {
 			$this->error['payment_country'] = $this->language->get('error_country');
-		}
+		}*/
 
-		if (!isset($this->request->post['payment_zone_id']) || $this->request->post['payment_zone_id'] == '') {
+		/*if (!isset($this->request->post['payment_zone_id']) || $this->request->post['payment_zone_id'] == '') {
 			$this->error['payment_zone'] = $this->language->get('error_zone');
-		}
+		}*/
 
 		if (!isset($this->request->post['payment_method']) || $this->request->post['payment_method'] == '') {
 			$this->error['payment_method'] = $this->language->get('error_payment');
@@ -1332,6 +1348,11 @@ class ControllerSaleOrder extends Controller {
 	}
 
 	public function info() {
+
+        $this->load->model('sale/deliveryman');
+
+        $this->data['deliverymans'] = $this->model_sale_deliveryman->deliverymans()->rows;
+
 		$this->load->model('sale/order');
 
 		if (isset($this->request->get['order_id'])) {
@@ -1342,6 +1363,12 @@ class ControllerSaleOrder extends Controller {
 
 		$order_info = $this->model_sale_order->getOrder($order_id);
 
+        if(isset($order_info['deliveryman_id'])) {
+            $this->data['deliveryman_id'] = $order_info['deliveryman_id'];
+        } else {
+            $this->data['deliveryman_id'] = 0;
+        }
+
 		if ($order_info) {
 			$this->language->load('sale/order');
 
@@ -1349,6 +1376,7 @@ class ControllerSaleOrder extends Controller {
 
 			$this->data['heading_title'] = $this->language->get('heading_title');
 
+            $this->data['text_select'] = $this->language->get('text_select');
 			$this->data['text_amazon_order_id'] = $this->language->get('text_amazon_order_id');
 			$this->data['text_name'] = $this->language->get('text_name');
 			$this->data['text_order_id'] = $this->language->get('text_order_id');
@@ -2161,11 +2189,15 @@ class ControllerSaleOrder extends Controller {
 		$this->load->model('sale/order');
 
 		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
+
 			if (!$this->user->hasPermission('modify', 'sale/order')) {
 				$this->data['error'] = $this->language->get('error_permission');
 			}
 
 			if (!$this->data['error']) {
+
+				$this->model_sale_order->updateOrderDeliveryman($this->request->get['order_id'], $this->request->post);
+
 				$this->model_sale_order->addOrderHistory($this->request->get['order_id'], $this->request->post);
 
 				$this->data['success'] = $this->language->get('text_success');
@@ -2191,10 +2223,11 @@ class ControllerSaleOrder extends Controller {
 
 		foreach ($results as $result) {
 			$this->data['histories'][] = array(
-				'notify'     => $result['notify'] ? $this->language->get('text_yes') : $this->language->get('text_no'),
-				'status'     => $result['status'],
-				'comment'    => nl2br($result['comment']),
-				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
+				'notify'      => $result['notify'] ? $this->language->get('text_yes') : $this->language->get('text_no'),
+				'status'      => $result['status'],
+				'deliveryman' => empty($result['deliveryman'])?"未指定":$result['deliveryman'],
+				'comment'     => nl2br($result['comment']),
+				'date_added'  => date($this->language->get('date_format_short'), strtotime($result['date_added']))
 			);
 		}
 
@@ -2427,7 +2460,7 @@ class ControllerSaleOrder extends Controller {
 				if ($order_info['shipping_address_format']) {
 					$format = $order_info['shipping_address_format'];
 				} else {
-					$format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
+					$format = '{firstname}' . "\n" . '{country}' . "\n"  . '{zone}' . "\n" . '{city}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" .' {postcode}';
 				}
 
 				$find = array(
@@ -2539,6 +2572,8 @@ class ControllerSaleOrder extends Controller {
 
 				$this->data['orders'][] = array(
 					'order_id'	         => $order_id,
+					'firstname'	         => $order_info['firstname'],
+					'telephone'	         => $order_info['telephone'],
 					'invoice_no'         => $invoice_no,
 					'date_added'         => date($this->language->get('date_format_short'), strtotime($order_info['date_added'])),
 					'store_name'         => $order_info['store_name'],

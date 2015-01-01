@@ -22,37 +22,37 @@
           <thead>
             <tr>
               <td width="1" style="text-align: center;"><input type="checkbox" onclick="$('input[name*=\'selected\']').attr('checked', this.checked);" /></td>
-              <td class="right"><?php if ($sort == 'o.order_id') { ?>
+              <td class="right" style="width: 10%;"><?php if ($sort == 'o.order_id') { ?>
                 <a href="<?php echo $sort_order; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_order_id; ?></a>
                 <?php } else { ?>
                 <a href="<?php echo $sort_order; ?>"><?php echo $column_order_id; ?></a>
                 <?php } ?></td>
-              <td class="left"><?php if ($sort == 'customer') { ?>
+              <td class="left" style="width: 15%;"><?php if ($sort == 'customer') { ?>
                 <a href="<?php echo $sort_customer; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_customer; ?></a>
                 <?php } else { ?>
                 <a href="<?php echo $sort_customer; ?>"><?php echo $column_customer; ?></a>
                 <?php } ?></td>
-              <td class="left"><?php if ($sort == 'status') { ?>
+              <td class="left" style="width: 15%;"><?php if ($sort == 'status') { ?>
                 <a href="<?php echo $sort_status; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_status; ?></a>
                 <?php } else { ?>
                 <a href="<?php echo $sort_status; ?>"><?php echo $column_status; ?></a>
                 <?php } ?></td>
-              <td class="right"><?php if ($sort == 'o.total') { ?>
+              <td class="right" style="width: 10%;"><?php if ($sort == 'o.total') { ?>
                 <a href="<?php echo $sort_total; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_total; ?></a>
                 <?php } else { ?>
                 <a href="<?php echo $sort_total; ?>"><?php echo $column_total; ?></a>
                 <?php } ?></td>
-              <td class="left"><?php if ($sort == 'o.date_added') { ?>
+              <td class="left" style="width: 15%;"><?php if ($sort == 'o.date_added') { ?>
                 <a href="<?php echo $sort_date_added; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_date_added; ?></a>
                 <?php } else { ?>
                 <a href="<?php echo $sort_date_added; ?>"><?php echo $column_date_added; ?></a>
                 <?php } ?></td>
-              <td class="left"><?php if ($sort == 'o.date_modified') { ?>
+              <td class="left" style="width: 15%;"><?php if ($sort == 'o.date_modified') { ?>
                 <a href="<?php echo $sort_date_modified; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_date_modified; ?></a>
                 <?php } else { ?>
                 <a href="<?php echo $sort_date_modified; ?>"><?php echo $column_date_modified; ?></a>
                 <?php } ?></td>
-              <td class="right"><?php echo $column_action; ?></td>
+              <td class="right" style="width: 20%;"><?php echo $column_action; ?></td>
             </tr>
           </thead>
           <tbody>
@@ -78,7 +78,10 @@
               <td align="right"><input type="text" name="filter_total" value="<?php echo $filter_total; ?>" size="4" style="text-align: right;" /></td>
               <td><input type="text" name="filter_date_added" value="<?php echo $filter_date_added; ?>" size="12" class="date" /></td>
               <td><input type="text" name="filter_date_modified" value="<?php echo $filter_date_modified; ?>" size="12" class="date" /></td>
-              <td align="right"><a onclick="filter();" class="button"><?php echo $button_filter; ?></a></td>
+              <td align="right">
+                  <a onclick="filter();" class="button"><?php echo $button_filter; ?></a>&nbsp;
+                  <a href="<?php echo $clear_filter; ?>" class="button"><?php echo $button_clear_filter; ?></a>
+              </td>
             </tr>
             <?php if ($orders) { ?>
             <?php foreach ($orders as $order) { ?>

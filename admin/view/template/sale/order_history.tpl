@@ -7,10 +7,11 @@
 <table class="list">
   <thead>
     <tr>
-      <td class="left"><b><?php echo $column_date_added; ?></b></td>
-      <td class="left"><b><?php echo $column_comment; ?></b></td>
-      <td class="left"><b><?php echo $column_status; ?></b></td>
-      <td class="left"><b><?php echo $column_notify; ?></b></td>
+      <td class="left" style="width: 20%;"><b><?php echo $column_date_added; ?></b></td>
+      <td class="left" style="width: 20%;"><b><?php echo $column_comment; ?></b></td>
+      <td class="left" style="width: 20%;"><b><?php echo $column_status; ?></b></td>
+      <td class="left" style="width: 20%;"><b><?php echo $column_notify; ?></b></td>
+      <td class="left" style="width: 20%;"><b>配送员</b></td>
     </tr>
   </thead>
   <tbody>
@@ -21,11 +22,12 @@
       <td class="left"><?php echo $history['comment']; ?></td>
       <td class="left"><?php echo $history['status']; ?></td>
       <td class="left"><?php echo $history['notify']; ?></td>
+      <td class="left"><?php echo $history['deliveryman']; ?></td>
     </tr>
     <?php } ?>
     <?php } else { ?>
     <tr>
-      <td class="center" colspan="4"><?php echo $text_no_results; ?></td>
+      <td class="center" colspan="5"><?php echo $text_no_results; ?></td>
     </tr>
     <?php } ?>
   </tbody>

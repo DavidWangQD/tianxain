@@ -1,6 +1,6 @@
 <?php
 // Heading
-$_['heading_title']      = 'Cash On Delivery';
+$_['heading_title']      = '货到付款';
 
 // Text
 $_['text_payment']       = 'Payment';

@@ -14,11 +14,18 @@
       <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a href="<?php echo $cancel; ?>" class="button"><?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
-      <div id="vtabs" class="vtabs"><a href="#tab-customer"><?php echo $tab_customer; ?></a><a href="#tab-payment"><?php echo $tab_payment; ?></a><a href="#tab-shipping"><?php echo $tab_shipping; ?></a><a href="#tab-product"><?php echo $tab_product; ?></a><a href="#tab-voucher"><?php echo $tab_voucher; ?></a><a href="#tab-total"><?php echo $tab_total; ?></a></div>
+      <div id="vtabs" class="vtabs">
+          <a href="#tab-customer"><?php echo $tab_customer; ?></a>
+          <!--<a href="#tab-payment"><?php echo $tab_payment; ?></a>-->
+          <a href="#tab-shipping"><?php echo $tab_shipping; ?></a>
+          <a href="#tab-product"><?php echo $tab_product; ?></a>
+          <!--<a href="#tab-voucher"><?php echo $tab_voucher; ?></a>-->
+          <a href="#tab-total"><?php echo $tab_total; ?></a>
+      </div>
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
         <div id="tab-customer" class="vtabs-content">
           <table class="form">
-            <tr>
+            <tr style="display: none;">
               <td class="left"><?php echo $entry_store; ?></td>
               <td class="left"><select name="store_id">
                   <option value="0"><?php echo $text_default; ?></option>
@@ -31,11 +38,18 @@
                   <?php } ?>
                 </select></td>
             </tr>
-            <tr>
+            <tr style="display: none;">
               <td><?php echo $entry_customer; ?></td>
               <td><input type="text" name="customer" value="<?php echo $customer; ?>" />
                 <input type="hidden" name="customer_id" value="<?php echo $customer_id; ?>" />
                 <input type="hidden" name="customer_group_id" value="<?php echo $customer_group_id; ?>" /></td>
+            </tr>
+            <tr>
+                <td><span class="required">*</span> <?php echo $entry_firstname; ?></td>
+                <td><input type="text" name="firstname" value="<?php echo $firstname; ?>" />
+                    <?php if ($error_firstname) { ?>
+                    <span class="error"><?php echo $error_firstname; ?></span>
+                    <?php } ?></td>
             </tr>
             <tr>
               <td class="left"><?php echo $entry_customer_group; ?></td>
@@ -49,22 +63,15 @@
                   <?php } ?>
                 </select></td>
             </tr>
-            <tr>
-              <td><span class="required">*</span> <?php echo $entry_firstname; ?></td>
-              <td><input type="text" name="firstname" value="<?php echo $firstname; ?>" />
-                <?php if ($error_firstname) { ?>
-                <span class="error"><?php echo $error_firstname; ?></span>
-                <?php } ?></td>
-            </tr>
-            <tr>
+            <tr style="display: none;">
               <td><span class="required">*</span> <?php echo $entry_lastname; ?></td>
-              <td><input type="text" name="lastname" value="<?php echo $lastname; ?>" />
+              <td><input type="text" name="lastname" value="lastname" />
                 <?php if ($error_lastname) { ?>
                 <span class="error"><?php echo $error_lastname; ?></span>
                 <?php } ?></td>
             </tr>
             <tr>
-              <td><span class="required">*</span> <?php echo $entry_email; ?></td>
+              <td><?php echo $entry_email; ?></td>
               <td><input type="text" name="email" value="<?php echo $email; ?>" />
                 <?php if ($error_email) { ?>
                 <span class="error"><?php echo $error_email; ?></span>
@@ -77,13 +84,13 @@
                 <span class="error"><?php echo $error_telephone; ?></span>
                 <?php } ?></td>
             </tr>
-            <tr>
+            <tr style="display: none;">
               <td><?php echo $entry_fax; ?></td>
               <td><input type="text" name="fax" value="<?php echo $fax; ?>" /></td>
             </tr>
           </table>
         </div>
-        <div id="tab-payment" class="vtabs-content">
+        <div id="tab-payment" class="vtabs-content" style="display: none;">
           <table class="form">
             <tr>
               <td><?php echo $entry_address; ?></td>
@@ -96,14 +103,14 @@
             </tr>
             <tr>
               <td><span class="required">*</span> <?php echo $entry_firstname; ?></td>
-              <td><input type="text" name="payment_firstname" value="<?php echo $payment_firstname; ?>" />
+              <td><input type="text" name="payment_firstname" value="payment_firstname" />
                 <?php if ($error_payment_firstname) { ?>
                 <span class="error"><?php echo $error_payment_firstname; ?></span>
                 <?php } ?></td>
             </tr>
             <tr>
               <td><span class="required">*</span> <?php echo $entry_lastname; ?></td>
-              <td><input type="text" name="payment_lastname" value="<?php echo $payment_lastname; ?>" />
+              <td><input type="text" name="payment_lastname" value="payment_lastname" />
                 <?php if ($error_payment_lastname) { ?>
                 <span class="error"><?php echo $error_payment_lastname; ?></span>
                 <?php } ?></td>
@@ -114,18 +121,18 @@
             </tr>
             <tr id="company-id-display">
               <td><span id="company-id-required" class="required">*</span> <?php echo $entry_company_id; ?></td>
-              <td><input type="text" name="payment_company_id" value="<?php echo $payment_company_id; ?>" /></td>
+              <td><input type="text" name="payment_company_id" value="payment_company_id" /></td>
             </tr>
             <tr id="tax-id-display">
               <td><span id="tax-id-required" class="required">*</span> <?php echo $entry_tax_id; ?></td>
-              <td><input type="text" name="payment_tax_id" value="<?php echo $payment_tax_id; ?>" />
+              <td><input type="text" name="payment_tax_id" value="payment_tax_id" />
                 <?php if ($error_payment_tax_id) { ?>
                 <span class="error"><?php echo $error_payment_tax_id; ?></span>
                 <?php } ?></td>
             </tr>
             <tr>
               <td><span class="required">*</span> <?php echo $entry_address_1; ?></td>
-              <td><input type="text" name="payment_address_1" value="<?php echo $payment_address_1; ?>" />
+              <td><input type="text" name="payment_address_1" value="payment_address_1" />
                 <?php if ($error_payment_address_1) { ?>
                 <span class="error"><?php echo $error_payment_address_1; ?></span>
                 <?php } ?></td>
@@ -136,7 +143,7 @@
             </tr>
             <tr>
               <td><span class="required">*</span> <?php echo $entry_city; ?></td>
-              <td><input type="text" name="payment_city" value="<?php echo $payment_city; ?>" />
+              <td><input type="text" name="payment_city" value="payment_city" />
                 <?php if ($error_payment_city) { ?>
                 <span class="error"><?php echo $error_payment_city; ?></span>
                 <?php } ?></td>
@@ -176,7 +183,7 @@
         </div>
         <div id="tab-shipping" class="vtabs-content">
           <table class="form">
-            <tr>
+            <tr style="display: none;">
               <td><?php echo $entry_address; ?></td>
               <td><select name="shipping_address">
                   <option value="0" selected="selected"><?php echo $text_none; ?></option>
@@ -192,16 +199,44 @@
                 <span class="error"><?php echo $error_shipping_firstname; ?></span>
                 <?php } ?></td>
             </tr>
-            <tr>
+            <tr style="display: none;">
               <td><span class="required">*</span> <?php echo $entry_lastname; ?></td>
-              <td><input type="text" name="shipping_lastname" value="<?php echo $shipping_lastname; ?>" />
+              <td><input type="text" name="shipping_lastname" value="shipping_lastname" />
                 <?php if ($error_shipping_lastname) { ?>
                 <span class="error"><?php echo $error_shipping_lastname; ?></span>
                 <?php } ?></td>
             </tr>
-            <tr>
+            <tr style="display: none;">
               <td><?php echo $entry_company; ?></td>
               <td><input type="text" name="shipping_company" value="<?php echo $shipping_company; ?>" /></td>
+            </tr>
+            <tr>
+                <td><span class="required">*</span> <?php echo $entry_country; ?></td>
+                <td><select name="shipping_country_id">
+                        <option value=""><?php echo $text_select; ?></option>
+                        <?php foreach ($countries as $country) { ?>
+                        <?php if ($country['country_id'] == $shipping_country_id) { ?>
+                        <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
+                        <?php } else { ?>
+                        <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
+                        <?php } ?>
+                        <?php } ?>
+                    </select>
+                    <?php if ($error_shipping_country) { ?>
+                    <span class="error"><?php echo $error_shipping_country; ?></span>
+                    <?php } ?></td>
+            </tr>
+            <tr>
+                <td><span class="required">*</span> <?php echo $entry_zone; ?></td>
+                <td><select name="shipping_zone_id">
+                    </select>
+                    <?php if ($error_shipping_zone) { ?>
+                    <span class="error"><?php echo $error_shipping_zone; ?></span>
+                    <?php } ?></td>
+            </tr>
+            <tr>
+                <td><span class="required">*</span> <?php echo $entry_city; ?></td>
+                <td><input type="text" name="shipping_city" value="<?php echo $shipping_city; ?>" /></td>
             </tr>
             <tr>
               <td><span class="required">*</span> <?php echo $entry_address_1; ?></td>
@@ -215,10 +250,6 @@
               <td><input type="text" name="shipping_address_2" value="<?php echo $shipping_address_2; ?>" /></td>
             </tr>
             <tr>
-              <td><span class="required">*</span> <?php echo $entry_city; ?></td>
-              <td><input type="text" name="shipping_city" value="<?php echo $shipping_city; ?>" /></td>
-            </tr>
-            <tr>
               <td><span id="shipping-postcode-required" class="required">*</span> <?php echo $entry_postcode; ?></td>
               <td><input type="text" name="shipping_postcode" value="<?php echo $shipping_postcode; ?>" />
                 <?php if ($error_shipping_postcode) { ?>
@@ -226,28 +257,19 @@
                 <?php } ?></td>
             </tr>
             <tr>
-              <td><span class="required">*</span> <?php echo $entry_country; ?></td>
-              <td><select name="shipping_country_id">
-                  <option value=""><?php echo $text_select; ?></option>
-                  <?php foreach ($countries as $country) { ?>
-                  <?php if ($country['country_id'] == $shipping_country_id) { ?>
-                  <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
-                  <?php } else { ?>
-                  <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
-                  <?php } ?>
-                  <?php } ?>
-                </select>
-                <?php if ($error_shipping_country) { ?>
-                <span class="error"><?php echo $error_shipping_country; ?></span>
-                <?php } ?></td>
-            </tr>
-            <tr>
-              <td><span class="required">*</span> <?php echo $entry_zone; ?></td>
-              <td><select name="shipping_zone_id">
-                </select>
-                <?php if ($error_shipping_zone) { ?>
-                <span class="error"><?php echo $error_shipping_zone; ?></span>
-                <?php } ?></td>
+                <td class="left">选择配送员：</td>
+                <td class="left">
+                    <select name="deliveryman_id">
+                        <option value="0"><?php echo $text_select; ?></option>
+                        <?php foreach($deliverymans as $deliveryman) { ?>
+                        <?php if($deliveryman_id == $deliveryman['deliveryman_id']) { ?>
+                            <option value="<?php echo $deliveryman['deliveryman_id']; ?>" selected="selected"><?php echo $deliveryman['name']; ?></option>
+                        <?php } else { ?>
+                            <option value="<?php echo $deliveryman['deliveryman_id']; ?>"><?php echo $deliveryman['name']; ?></option>
+                        <?php } ?>
+                        <?php } ?>
+                    </select>
+                </td>
             </tr>
           </table>
         </div>
@@ -255,12 +277,11 @@
           <table class="list">
             <thead>
               <tr>
-                <td></td>
-                <td class="left"><?php echo $column_product; ?></td>
-                <td class="left"><?php echo $column_model; ?></td>
-                <td class="right"><?php echo $column_quantity; ?></td>
-                <td class="right"><?php echo $column_price; ?></td>
-                <td class="right"><?php echo $column_total; ?></td>
+                <td style="width: 5%;"></td>
+                <td class="left" style="width: 45%;"><?php echo $column_product; ?></td>
+                <td class="right" style="width: 10%;"><?php echo $column_quantity; ?></td>
+                <td class="right" style="width: 20%;"><?php echo $column_price; ?></td>
+                <td class="right" style="width: 20%;"><?php echo $column_total; ?></td>
               </tr>
             </thead>
             <?php $product_row = 0; ?>
@@ -293,8 +314,6 @@
                   <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_download][<?php echo $download_row; ?>][remaining]" value="<?php echo $download['remaining']; ?>" />
                   <?php $download_row++; ?>
                   <?php } ?></td>
-                <td class="left"><?php echo $order_product['model']; ?>
-                  <input type="hidden" name="order_product[<?php echo $product_row; ?>][model]" value="<?php echo $order_product['model']; ?>" /></td>
                 <td class="right"><?php echo $order_product['quantity']; ?>
                   <input type="hidden" name="order_product[<?php echo $product_row; ?>][quantity]" value="<?php echo $order_product['quantity']; ?>" /></td>                 
                 <td class="right"><?php echo $order_product['price']; ?>
@@ -308,7 +327,7 @@
               <?php } ?>
               <?php } else { ?>
               <tr>
-                <td class="center" colspan="6"><?php echo $text_no_results; ?></td>
+                <td class="center" colspan="5"><?php echo $text_no_results; ?></td>
               </tr>
               <?php } ?>
             </tbody>
@@ -339,7 +358,7 @@
             </tfoot>
           </table>
         </div>
-        <div id="tab-voucher" class="vtabs-content">
+        <div id="tab-voucher" class="vtabs-content" style="display: none;">
           <table class="list">
             <thead>
               <tr>
@@ -435,11 +454,10 @@
           <table class="list">
             <thead>
               <tr>
-                <td class="left"><?php echo $column_product; ?></td>
-                <td class="left"><?php echo $column_model; ?></td>
-                <td class="right"><?php echo $column_quantity; ?></td>
-                <td class="right"><?php echo $column_price; ?></td>
-                <td class="right"><?php echo $column_total; ?></td>
+                <td class="left" style="width: 25%;"><?php echo $column_product; ?></td>
+                <td class="right" style="width: 25%;"><?php echo $column_quantity; ?></td>
+                <td class="right" style="width: 25%;"><?php echo $column_price; ?></td>
+                <td class="right" style="width: 25%;"><?php echo $column_total; ?></td>
               </tr>
             </thead>
             <tbody id="total">
@@ -451,7 +469,6 @@
                   <?php foreach ($order_product['option'] as $option) { ?>
                   - <small><?php echo $option['name']; ?>: <?php echo $option['value']; ?></small><br />
                   <?php } ?></td>
-                <td class="left"><?php echo $order_product['model']; ?></td>
                 <td class="right"><?php echo $order_product['quantity']; ?></td>
                 <td class="right"><?php echo $order_product['price']; ?></td>
                 <td class="right"><?php echo $order_product['total']; ?></td>
@@ -468,7 +485,7 @@
               <?php } ?>
               <?php foreach ($order_totals as $order_total) { ?>
               <tr id="total-row<?php echo $total_row; ?>">
-                <td class="right" colspan="4"><?php echo $order_total['title']; ?>:
+                <td class="right" colspan="3"><?php echo $order_total['title']; ?>:
                   <input type="hidden" name="order_total[<?php echo $total_row; ?>][order_total_id]" value="<?php echo $order_total['order_total_id']; ?>" />
                   <input type="hidden" name="order_total[<?php echo $total_row; ?>][code]" value="<?php echo $order_total['code']; ?>" />
                   <input type="hidden" name="order_total[<?php echo $total_row; ?>][title]" value="<?php echo $order_total['title']; ?>" />
@@ -481,7 +498,7 @@
               <?php } ?>
               <?php } else { ?>
               <tr>
-                <td class="center" colspan="5"><?php echo $text_no_results; ?></td>
+                <td class="center" colspan="4"><?php echo $text_no_results; ?></td>
               </tr>
               <?php } ?>
             </tbody>
@@ -521,15 +538,15 @@
                   <span class="error"><?php echo $error_payment_method; ?></span>
                   <?php } ?></td>
               </tr>             
-              <tr>
+              <tr style="display: none;">
                 <td class="left"><?php echo $entry_coupon; ?></td>
                 <td class="left"><input type="text" name="coupon" value="" /></td>
               </tr>
-              <tr>
+              <tr style="display: none;">
                 <td class="left"><?php echo $entry_voucher; ?></td>
                 <td class="left"><input type="text" name="voucher" value="" /></td>
               </tr>
-              <tr>
+              <tr style="display: none;">
                 <td class="left"><?php echo $entry_reward; ?></td>
                 <td class="left"><input type="text" name="reward" value="" /></td>
               </tr>
@@ -545,11 +562,11 @@
                     <?php } ?>
                   </select></td>
               </tr>
-              <tr>
+              <tr style="display: none;">
                 <td class="left"><?php echo $entry_comment; ?></td>
                 <td class="left"><textarea name="comment" cols="40" rows="5"><?php echo $comment; ?></textarea></td>
               </tr>
-              <tr>
+              <tr style="display: none;">
                 <td class="left"><?php echo $entry_affiliate; ?></td>
                 <td class="left"><input type="text" name="affiliate" value="<?php echo $affiliate; ?>" />
                   <input type="hidden" name="affiliate_id" value="<?php echo $affiliate_id; ?>" /></td>
@@ -1404,7 +1421,7 @@ $('#button-product, #button-voucher, #button-update').live('click', function() {
 					}
 					
 					html += '  </td>';
-					html += '  <td class="left">' + product['model'] + '<input type="hidden" name="order_product[' + product_row + '][model]" value="' + product['model'] + '" /></td>';
+					//html += '  <td class="left">' + product['model'] + '<input type="hidden" name="order_product[' + product_row + '][model]" value="' + product['model'] + '" /></td>';
 					html += '  <td class="right">' + product['quantity'] + '<input type="hidden" name="order_product[' + product_row + '][quantity]" value="' + product['quantity'] + '" /></td>';
 					html += '  <td class="right">' + product['price'] + '<input type="hidden" name="order_product[' + product_row + '][price]" value="' + product['price'] + '" /></td>';
 					html += '  <td class="right">' + product['total'] + '<input type="hidden" name="order_product[' + product_row + '][total]" value="' + product['total'] + '" /><input type="hidden" name="order_product[' + product_row + '][tax]" value="' + product['tax'] + '" /><input type="hidden" name="order_product[' + product_row + '][reward]" value="' + product['reward'] + '" /></td>';
@@ -1416,7 +1433,7 @@ $('#button-product, #button-voucher, #button-update').live('click', function() {
 				$('#product').html(html);
 			} else {
 				html  = '</tr>';
-				html += '  <td colspan="6" class="center"><?php echo $text_no_results; ?></td>';
+				html += '  <td colspan="5" class="center"><?php echo $text_no_results; ?></td>';
 				html += '</tr>';	
 
 				$('#product').html(html);	
@@ -1484,7 +1501,7 @@ $('#button-product, #button-voucher, #button-update').live('click', function() {
 						}
 						
 						html += '  </td>';
-						html += '  <td class="left">' + product['model'] + '</td>';
+//						html += '  <td class="left">' + product['model'] + '</td>';
 						html += '  <td class="right">' + product['quantity'] + '</td>';
 						html += '  <td class="right">' + product['price'] + '</td>';
 						html += '  <td class="right">' + product['total'] + '</td>';
@@ -1512,7 +1529,7 @@ $('#button-product, #button-voucher, #button-update').live('click', function() {
 					total = json['order_total'][i];
 					
 					html += '<tr id="total-row' + total_row + '">';
-					html += '  <td class="right" colspan="4"><input type="hidden" name="order_total[' + total_row + '][order_total_id]" value="" /><input type="hidden" name="order_total[' + total_row + '][code]" value="' + total['code'] + '" /><input type="hidden" name="order_total[' + total_row + '][title]" value="' + total['title'] + '" /><input type="hidden" name="order_total[' + total_row + '][text]" value="' + total['text'] + '" /><input type="hidden" name="order_total[' + total_row + '][value]" value="' + total['value'] + '" /><input type="hidden" name="order_total[' + total_row + '][sort_order]" value="' + total['sort_order'] + '" />' + total['title'] + ':</td>';
+					html += '  <td class="right" colspan="3"><input type="hidden" name="order_total[' + total_row + '][order_total_id]" value="" /><input type="hidden" name="order_total[' + total_row + '][code]" value="' + total['code'] + '" /><input type="hidden" name="order_total[' + total_row + '][title]" value="' + total['title'] + '" /><input type="hidden" name="order_total[' + total_row + '][text]" value="' + total['text'] + '" /><input type="hidden" name="order_total[' + total_row + '][value]" value="' + total['value'] + '" /><input type="hidden" name="order_total[' + total_row + '][sort_order]" value="' + total['sort_order'] + '" />' + total['title'] + ':</td>';
 					html += '  <td class="right">' + total['value'] + '</td>';
 					html += '</tr>';
 					
@@ -1522,7 +1539,7 @@ $('#button-product, #button-voucher, #button-update').live('click', function() {
 				$('#total').html(html);
 			} else {
 				html  = '</tr>';
-				html += '  <td colspan="5" class="center"><?php echo $text_no_results; ?></td>';
+				html += '  <td colspan="4" class="center"><?php echo $text_no_results; ?></td>';
 				html += '</tr>';	
 
 				$('#total').html(html);					

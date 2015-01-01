@@ -11,7 +11,9 @@
       <div class="buttons"><a href="<?php echo $invoice; ?>" target="_blank" class="button"><?php echo $button_invoice; ?></a><a href="<?php echo $cancel; ?>" class="button"><?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
-      <div class="vtabs"><a href="#tab-order"><?php echo $tab_order; ?></a><a href="#tab-payment"><?php echo $tab_payment; ?></a>
+      <div class="vtabs">
+        <a href="#tab-order"><?php echo $tab_order; ?></a>
+        <!--<a href="#tab-payment"><?php echo $tab_payment; ?></a>-->
         <?php if ($shipping_method) { ?>
         <a href="#tab-shipping"><?php echo $tab_shipping; ?></a>
         <?php } ?>
@@ -53,7 +55,7 @@
           <?php if ($customer) { ?>
           <tr>
             <td><?php echo $text_customer; ?></td>
-            <td><a href="<?php echo $customer; ?>"><?php echo $firstname; ?> <?php echo $lastname; ?></a></td>
+            <td><a href="<?php echo $customer; ?>"><?php echo $firstname; ?></a></td>
           </tr>
           <?php } else { ?>
           <tr>
@@ -164,7 +166,7 @@
           </tr>
         </table>
       </div>
-      <div id="tab-payment" class="vtabs-content">
+      <div id="tab-payment" class="vtabs-content" style="display: none;">
         <table class="form">
           <tr>
             <td><?php echo $text_firstname; ?></td>
@@ -249,7 +251,7 @@
               <td><?php echo $text_firstname; ?></td>
               <td><?php echo $shipping_firstname; ?></td>
             </tr>
-            <tr>
+            <tr style="display: none;">
               <td><?php echo $text_lastname; ?></td>
               <td><?php echo $shipping_lastname; ?></td>
             </tr>
@@ -262,39 +264,39 @@
           </tr>
           <?php } ?>
           <tr>
-            <td><?php echo $text_address_1; ?></td>
-            <td><?php echo $shipping_address_1; ?></td>
-          </tr>
-          <?php if ($shipping_address_2) { ?>
-          <tr>
-            <td><?php echo $text_address_2; ?></td>
-            <td><?php echo $shipping_address_2; ?></td>
-          </tr>
-          <?php } ?>
-          <tr>
-            <td><?php echo $text_city; ?></td>
-            <td><?php echo $shipping_city; ?></td>
-          </tr>
-          <?php if ($shipping_postcode) { ?>
-          <tr>
-            <td><?php echo $text_postcode; ?></td>
-            <td><?php echo $shipping_postcode; ?></td>
-          </tr>
-          <?php } ?>
-          <tr>
-            <td><?php echo $text_zone; ?></td>
-            <td><?php echo $shipping_zone; ?></td>
-          </tr>
-          <?php if ($shipping_zone_code) { ?>
-          <tr>
-            <td><?php echo $text_zone_code; ?></td>
-            <td><?php echo $shipping_zone_code; ?></td>
-          </tr>
-          <?php } ?>
-          <tr>
             <td><?php echo $text_country; ?></td>
             <td><?php echo $shipping_country; ?></td>
           </tr>
+          <tr>
+              <td><?php echo $text_zone; ?></td>
+              <td><?php echo $shipping_zone; ?></td>
+          </tr>
+          <?php if ($shipping_zone_code) { ?>
+          <tr>
+              <td><?php echo $text_zone_code; ?></td>
+              <td><?php echo $shipping_zone_code; ?></td>
+          </tr>
+          <?php } ?>
+          <tr>
+              <td><?php echo $text_city; ?></td>
+              <td><?php echo $shipping_city; ?></td>
+          </tr>
+          <tr>
+              <td><?php echo $text_address_1; ?></td>
+              <td><?php echo $shipping_address_1; ?></td>
+          </tr>
+          <?php if ($shipping_address_2) { ?>
+          <tr>
+              <td><?php echo $text_address_2; ?></td>
+              <td><?php echo $shipping_address_2; ?></td>
+          </tr>
+          <?php } ?>
+          <?php if ($shipping_postcode) { ?>
+          <tr>
+              <td><?php echo $text_postcode; ?></td>
+              <td><?php echo $shipping_postcode; ?></td>
+          </tr>
+          <?php } ?>
           <?php if ($shipping_method) { ?>
           <tr>
             <td><?php echo $text_shipping_method; ?></td>
@@ -308,11 +310,10 @@
         <table class="list">
           <thead>
             <tr>
-              <td class="left"><?php echo $column_product; ?></td>
-              <td class="left"><?php echo $column_model; ?></td>
-              <td class="right"><?php echo $column_quantity; ?></td>
-              <td class="right"><?php echo $column_price; ?></td>
-              <td class="right"><?php echo $column_total; ?></td>
+              <td class="left" style="width: 25%;"><?php echo $column_product; ?></td>
+              <td class="right" style="width: 25%;"><?php echo $column_quantity; ?></td>
+              <td class="right" style="width: 25%;"><?php echo $column_price; ?></td>
+              <td class="right" style="width: 25%;"><?php echo $column_total; ?></td>
             </tr>
           </thead>
           <tbody>
@@ -327,7 +328,6 @@
                 &nbsp;<small> - <?php echo $option['name']; ?>: <a href="<?php echo $option['href']; ?>"><?php echo $option['value']; ?></a></small>
                 <?php } ?>
                 <?php } ?></td>
-              <td class="left"><?php echo $product['model']; ?></td>
               <td class="right"><?php echo $product['quantity']; ?></td>
               <td class="right"><?php echo $product['price']; ?></td>
               <td class="right"><?php echo $product['total']; ?></td>
@@ -336,7 +336,6 @@
             <?php foreach ($vouchers as $voucher) { ?>
             <tr>
               <td class="left"><a href="<?php echo $voucher['href']; ?>"><?php echo $voucher['description']; ?></a></td>
-              <td class="left"></td>
               <td class="right">1</td>
               <td class="right"><?php echo $voucher['amount']; ?></td>
               <td class="right"><?php echo $voucher['amount']; ?></td>
@@ -346,33 +345,12 @@
           <?php foreach ($totals as $totals) { ?>
           <tbody id="totals">
             <tr>
-              <td colspan="4" class="right"><?php echo $totals['title']; ?>:</td>
+              <td colspan="3" class="right"><?php echo $totals['title']; ?>:</td>
               <td class="right"><?php echo $totals['text']; ?></td>
             </tr>
           </tbody>
           <?php } ?>
         </table>
-        <?php if ($downloads) { ?>
-        <h3><?php echo $text_download; ?></h3>
-        <table class="list">
-          <thead>
-            <tr>
-              <td class="left"><b><?php echo $column_download; ?></b></td>
-              <td class="left"><b><?php echo $column_filename; ?></b></td>
-              <td class="right"><b><?php echo $column_remaining; ?></b></td>
-            </tr>
-          </thead>
-          <tbody>
-            <?php foreach ($downloads as $download) { ?>
-            <tr>
-              <td class="left"><?php echo $download['name']; ?></td>
-              <td class="left"><?php echo $download['filename']; ?></td>
-              <td class="right"><?php echo $download['remaining']; ?></td>
-            </tr>
-            <?php } ?>
-          </tbody>
-        </table>
-        <?php } ?>
       </div>
       <div id="tab-history" class="vtabs-content">
         <div id="history"></div>
@@ -381,7 +359,7 @@
             <td><?php echo $entry_order_status; ?></td>
             <td>
               <input type="hidden" name="old_order_status_id" value="<?php echo $order_status_id; ?>" id="old_order_status_id" />
-              <select name="order_status_id">
+              <select name="order_status_id" style="width: 70px;">
                 <?php foreach ($order_statuses as $order_statuses) { ?>
                 <?php if ($order_statuses['order_status_id'] == $order_status_id) { ?>
                 <option value="<?php echo $order_statuses['order_status_id']; ?>" selected="selected"><?php echo $order_statuses['name']; ?></option>
@@ -390,6 +368,21 @@
                 <?php } ?>
                 <?php } ?>
               </select>
+            </td>
+          </tr>
+          <tr>
+            <td>选择配送员：</td>
+            <td>
+                <select id="deliveryman_id" name="deliveryman_id">
+                    <option value='0'><?php echo $text_select; ?></option>
+                    <?php foreach($deliverymans as $deliveryman) { ?>
+                        <?php if($deliveryman['deliveryman_id'] == $deliveryman_id) { ?>
+                            <option value="<?php echo $deliveryman['deliveryman_id']; ?>" selected="selected"><?php echo $deliveryman['name']; ?></option>
+                        <?php } else { ?>
+                            <option value="<?php echo $deliveryman['deliveryman_id']; ?>"><?php echo $deliveryman['name']; ?></option>
+                        <?php } ?>
+                    <?php } ?>
+                </select>
             </td>
           </tr>
           <tr>
@@ -949,11 +942,21 @@ $('#button-history').live('click', function() {
         addOrderInfo();
     }
 
+    var deliveryman_id = 0;
+    var deliveryman = '';
+
+    if($("#deliveryman_id").val() !== '0') {
+
+        deliveryman_id = $("#deliveryman_id").val();
+        deliveryman = $("#deliveryman_id option:selected").text();
+
+    }
+
 	$.ajax({
 		url: 'index.php?route=sale/order/history&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
 		type: 'post',
 		dataType: 'html',
-		data: 'order_status_id=' + encodeURIComponent($('select[name=\'order_status_id\']').val()) + '&notify=' + encodeURIComponent($('input[name=\'notify\']').attr('checked') ? 1 : 0) + '&append=' + encodeURIComponent($('input[name=\'append\']').attr('checked') ? 1 : 0) + '&comment=' + encodeURIComponent($('textarea[name=\'comment\']').val()),
+		data: 'order_status_id=' + encodeURIComponent($('select[name=\'order_status_id\']').val()) + '&notify=' + encodeURIComponent($('input[name=\'notify\']').attr('checked') ? 1 : 0) + '&append=' + encodeURIComponent($('input[name=\'append\']').attr('checked') ? 1 : 0) + '&comment=' + encodeURIComponent($('textarea[name=\'comment\']').val()) + '&deliveryman_id=' + deliveryman_id + '&deliveryman=' + deliveryman,
 		beforeSend: function() {
 			$('.success, .warning').remove();
 			$('#button-history').attr('disabled', true);

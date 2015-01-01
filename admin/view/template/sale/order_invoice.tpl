@@ -50,50 +50,39 @@
   </table>
   <table class="address">
     <tr class="heading">
-      <td width="50%"><b><?php echo $text_to; ?></b></td>
+      <td width="50%"><b>客户信息</b></td>
       <td width="50%"><b><?php echo $text_ship_to; ?></b></td>
     </tr>
     <tr>
-      <td><?php echo $order['payment_address']; ?><br/>
-        <?php echo $order['email']; ?><br/>
-        <?php echo $order['telephone']; ?>
-        <?php if ($order['payment_company_id']) { ?>
-        <br/>
-        <br/>
-        <?php echo $text_company_id; ?> <?php echo $order['payment_company_id']; ?>
-        <?php } ?>
-        <?php if ($order['payment_tax_id']) { ?>
-        <br/>
-        <?php echo $text_tax_id; ?> <?php echo $order['payment_tax_id']; ?>
-        <?php } ?></td>
+      <td>
+          <?php echo $order['firstname']; ?><br />
+          <?php echo $order['telephone']; ?>
+      </td>
       <td><?php echo $order['shipping_address']; ?></td>
     </tr>
   </table>
   <table class="product">
     <tr class="heading">
       <td><b><?php echo $column_product; ?></b></td>
-      <td><b><?php echo $column_model; ?></b></td>
       <td align="right"><b><?php echo $column_quantity; ?></b></td>
       <td align="right"><b><?php echo $column_price; ?></b></td>
       <td align="right"><b><?php echo $column_total; ?></b></td>
     </tr>
     <?php foreach ($order['product'] as $product) { ?>
     <tr>
-      <td><?php echo $product['name']; ?>
+      <td style="width: 25%;"><?php echo $product['name']; ?>
         <?php foreach ($product['option'] as $option) { ?>
         <br />
         &nbsp;<small> - <?php echo $option['name']; ?>: <?php echo $option['value']; ?></small>
         <?php } ?></td>
-      <td><?php echo $product['model']; ?></td>
-      <td align="right"><?php echo $product['quantity']; ?></td>
-      <td align="right"><?php echo $product['price']; ?></td>
-      <td align="right"><?php echo $product['total']; ?></td>
+      <td style="width: 25%;" align="right"><?php echo $product['quantity']; ?></td>
+      <td style="width: 25%;" align="right"><?php echo $product['price']; ?></td>
+      <td style="width: 25%;" align="right"><?php echo $product['total']; ?></td>
     </tr>
     <?php } ?>
     <?php foreach ($order['voucher'] as $voucher) { ?>
     <tr>
       <td align="left"><?php echo $voucher['description']; ?></td>
-      <td align="left"></td>
       <td align="right">1</td>
       <td align="right"><?php echo $voucher['amount']; ?></td>
       <td align="right"><?php echo $voucher['amount']; ?></td>
@@ -101,7 +90,7 @@
     <?php } ?>
     <?php foreach ($order['total'] as $total) { ?>
     <tr>
-      <td align="right" colspan="4"><b><?php echo $total['title']; ?>:</b></td>
+      <td align="right" colspan="3"><b><?php echo $total['title']; ?>:</b></td>
       <td align="right"><?php echo $total['text']; ?></td>
     </tr>
     <?php } ?>
