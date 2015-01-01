@@ -3,9 +3,9 @@ class ModelLocalisationOrderStatus extends Model {
 	public function addOrderStatus($data) {
 		foreach ($data['order_status'] as $language_id => $value) {
 			if (isset($order_status_id)) {
-				$this->db->query("INSERT INTO " . DB_PREFIX . "order_status SET order_status_id = '" . (int)$order_status_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
+				$this->db->query("INSERT INTO " . DB_PREFIX . "order_status SET order_status_id = '" . (int)$order_status_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "', sort_order = " . (int)$data['sort_order']);
 			} else {
-				$this->db->query("INSERT INTO " . DB_PREFIX . "order_status SET language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
+				$this->db->query("INSERT INTO " . DB_PREFIX . "order_status SET language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "', sort_order = " . (int)$data['sort_order']);
 
 				$order_status_id = $this->db->getLastId();
 			}
@@ -18,7 +18,7 @@ class ModelLocalisationOrderStatus extends Model {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "order_status WHERE order_status_id = '" . (int)$order_status_id . "'");
 
 		foreach ($data['order_status'] as $language_id => $value) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "order_status SET order_status_id = '" . (int)$order_status_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
+            $this->db->query("INSERT INTO " . DB_PREFIX . "order_status SET order_status_id = '" . (int)$order_status_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "', sort_order = " . (int)$data['sort_order']);
 		}
 
 		$this->cache->delete('order_status');
@@ -40,7 +40,7 @@ class ModelLocalisationOrderStatus extends Model {
 		if ($data) {
 			$sql = "SELECT * FROM " . DB_PREFIX . "order_status WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'";
 
-			$sql .= " ORDER BY name";	
+			$sql .= " ORDER BY " . $data['sort'];
 
 			if (isset($data['order']) && ($data['order'] == 'DESC')) {
 				$sql .= " DESC";
@@ -67,7 +67,7 @@ class ModelLocalisationOrderStatus extends Model {
 			$order_status_data = $this->cache->get('order_status.' . (int)$this->config->get('config_language_id'));
 
 			if (!$order_status_data) {
-				$query = $this->db->query("SELECT order_status_id, name FROM " . DB_PREFIX . "order_status WHERE language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY name");
+				$query = $this->db->query("SELECT order_status_id, name, sort_order FROM " . DB_PREFIX . "order_status WHERE language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY name");
 
 				$order_status_data = $query->rows;
 
@@ -89,6 +89,13 @@ class ModelLocalisationOrderStatus extends Model {
 
 		return $order_status_data;
 	}
+
+    public function getOrderStatusSortOrder($order_status_id) {
+
+        $query = $this->db->query("SELECT sort_order FROM " . DB_PREFIX . "order_status WHERE order_status_id = '" . (int)$order_status_id . "'");
+
+        return $query->row['sort_order'];
+    }
 
 	public function getTotalOrderStatuses() {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "order_status WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");

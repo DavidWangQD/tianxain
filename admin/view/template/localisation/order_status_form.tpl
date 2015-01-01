@@ -26,6 +26,15 @@
               <?php } ?>
               <?php } ?></td>
           </tr>
+          <tr>
+              <td><span class="required">*</span> <?php echo $entry_sort_order; ?></td>
+              <td>
+                  <input type="text" name="sort_order" value="<?php echo $sort_order; ?>" />
+                  <?php if ($error_sort_order) { ?>
+                  <span class="error"><?php echo $error_sort_order; ?></span>
+                  <?php } ?>
+              </td>
+          </tr>
         </table>
       </form>
     </div>

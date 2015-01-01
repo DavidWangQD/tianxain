@@ -183,6 +183,7 @@ class ControllerLocalisationOrderStatus extends Controller {
 
 			$this->data['order_statuses'][] = array(
 				'order_status_id' => $result['order_status_id'],
+				'sort_order'      => $result['sort_order'],
 				'name'            => $result['name'] . (($result['order_status_id'] == $this->config->get('config_order_status_id')) ? $this->language->get('text_default') : null),
 				'selected'        => isset($this->request->post['selected']) && in_array($result['order_status_id'], $this->request->post['selected']),
 				'action'          => $action
@@ -194,7 +195,8 @@ class ControllerLocalisationOrderStatus extends Controller {
 		$this->data['text_no_results'] = $this->language->get('text_no_results');
 
 		$this->data['column_name'] = $this->language->get('column_name');
-		$this->data['column_action'] = $this->language->get('column_action');		
+		$this->data['column_sort_order'] = $this->language->get('column_sort_order');
+		$this->data['column_action'] = $this->language->get('column_action');
 
 		$this->data['button_insert'] = $this->language->get('button_insert');
 		$this->data['button_delete'] = $this->language->get('button_delete');
@@ -226,6 +228,7 @@ class ControllerLocalisationOrderStatus extends Controller {
 		}
 
 		$this->data['sort_name'] = $this->url->link('localisation/order_status', 'token=' . $this->session->data['token'] . '&sort=name' . $url, 'SSL');
+		$this->data['sort_sort_order'] = $this->url->link('localisation/order_status', 'token=' . $this->session->data['token'] . '&sort=sort_order' . $url, 'SSL');
 
 		$url = '';
 
@@ -262,6 +265,7 @@ class ControllerLocalisationOrderStatus extends Controller {
 		$this->data['heading_title'] = $this->language->get('heading_title');
 
 		$this->data['entry_name'] = $this->language->get('entry_name');
+		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
@@ -277,6 +281,12 @@ class ControllerLocalisationOrderStatus extends Controller {
 		} else {
 			$this->data['error_name'] = array();
 		}
+
+        if (isset($this->error['sort_order'])) {
+            $this->data['error_sort_order'] = $this->error['sort_order'];
+        } else {
+            $this->data['error_sort_order'] = array();
+        }
 
 		$url = '';
 
@@ -326,6 +336,14 @@ class ControllerLocalisationOrderStatus extends Controller {
 			$this->data['order_status'] = array();
 		}
 
+        if (isset($this->request->post['sort_order'])) {
+            $this->data['sort_order'] = $this->request->post['sort_order'];
+        } elseif (isset($this->request->get['order_status_id'])) {
+            $this->data['sort_order'] = $this->model_localisation_order_status->getOrderStatusSortOrder($this->request->get['order_status_id']);
+        } else {
+            $this->data['sort_order'] = '1';
+        }
+
 		$this->template = 'localisation/order_status_form.tpl';
 		$this->children = array(
 			'common/header',
@@ -345,6 +363,10 @@ class ControllerLocalisationOrderStatus extends Controller {
 				$this->error['name'][$language_id] = $this->language->get('error_name');
 			}
 		}
+
+        if(!preg_match('/^[1-9]+$/',$this->request->post['sort_order'])) {
+            $this->error['sort_order'] = $this->language->get('error_sort_order');
+        }
 
 		if (!$this->error) {
 			return true;

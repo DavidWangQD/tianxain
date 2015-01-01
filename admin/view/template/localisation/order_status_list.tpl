@@ -22,12 +22,18 @@
           <thead>
             <tr>
               <td width="1" style="text-align: center;"><input type="checkbox" onclick="$('input[name*=\'selected\']').attr('checked', this.checked);" /></td>
-              <td class="left"><?php if ($sort == 'name') { ?>
+              <td class="left" style="width: 60%"><?php if ($sort == 'name') { ?>
                 <a href="<?php echo $sort_name; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_name; ?></a>
                 <?php } else { ?>
                 <a href="<?php echo $sort_name; ?>"><?php echo $column_name; ?></a>
                 <?php } ?></td>
-              <td class="right"><?php echo $column_action; ?></td>
+              <td class="left" style="width: 15%"><?php if ($sort == 'sort_order') { ?>
+                  <a href="<?php echo $sort_sort_order; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_sort_order; ?></a>
+                  <?php } else { ?>
+                  <a href="<?php echo $sort_sort_order; ?>"><?php echo $column_sort_order; ?></a>
+                  <?php } ?>
+              </td>
+              <td class="right" style="width: 25%"><?php echo $column_action; ?></td>
             </tr>
           </thead>
           <tbody>
@@ -40,6 +46,7 @@
                 <input type="checkbox" name="selected[]" value="<?php echo $order_status['order_status_id']; ?>" />
                 <?php } ?></td>
               <td class="left"><?php echo $order_status['name']; ?></td>
+              <td class="left"><?php echo $order_status['sort_order']; ?></td>
               <td class="right"><?php foreach ($order_status['action'] as $action) { ?>
                 [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
                 <?php } ?></td>
@@ -47,7 +54,7 @@
             <?php } ?>
             <?php } else { ?>
             <tr>
-              <td class="center" colspan="3"><?php echo $text_no_results; ?></td>
+              <td class="center" colspan="4"><?php echo $text_no_results; ?></td>
             </tr>
             <?php } ?>
           </tbody>
