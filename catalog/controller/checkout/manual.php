@@ -468,7 +468,7 @@ class ControllerCheckoutManual extends Controller {
 
 				array_multisort($sort_order, SORT_ASC, $json['order_total']);				
 			}
-
+            $this->request->post['payment_country_id'] = 44;
 			// Payment
 			if ($this->request->post['payment_country_id'] == '') {
 				$json['error']['payment']['country'] = $this->language->get('error_country');

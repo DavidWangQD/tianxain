@@ -1140,7 +1140,7 @@ class ControllerSaleOrder extends Controller {
 				'order_product_id' => $order_product['order_product_id'],
 				'product_id'       => $order_product['product_id'],
 				'name'             => $order_product['name'],
-				'model'            => $order_product['model'],
+				'model'            => empty($order_product['model'])?'':$order_product['model'],
 				'option'           => $order_option,
 				'download'         => $order_download,
 				'quantity'         => $order_product['quantity'],
@@ -1274,7 +1274,7 @@ class ControllerSaleOrder extends Controller {
 				$this->error['shipping_address_1'] = $this->language->get('error_address_1');
 			}
 
-			if ((utf8_strlen($this->request->post['shipping_city']) < 3) || (utf8_strlen($this->request->post['shipping_city']) > 128)) {
+			if (utf8_strlen($this->request->post['shipping_city']) > 128) {
 				$this->error['shipping_city'] = $this->language->get('error_city');
 			}
 
