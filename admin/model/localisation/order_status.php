@@ -71,6 +71,16 @@ class ModelLocalisationOrderStatus extends Model {
 
 				$order_status_data = $query->rows;
 
+                $sort_order = array();
+
+                foreach($order_status_data as $item) {
+
+                    $sort_order[] = $item['sort_order'];
+
+                }
+
+                array_multisort($sort_order, SORT_ASC, $order_status_data);
+
 				$this->cache->set('order_status.' . (int)$this->config->get('config_language_id'), $order_status_data);
 			}	
 
