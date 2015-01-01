@@ -40,6 +40,7 @@ $_['button_cancel']           = '取消';
 $_['button_clear']            = '清除日志';
 $_['button_close']            = '关闭';
 $_['button_filter']                 = '筛选';
+$_['button_clear_filter']           = '清除筛选';
 $_['button_send']                   = '发送';
 $_['button_edit']                   = '编辑';
 $_['button_copy']                   = '复制';

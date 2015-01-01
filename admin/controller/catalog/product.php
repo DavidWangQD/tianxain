@@ -320,7 +320,7 @@ class ControllerCatalogProduct extends Controller {
 
 		$this->data['breadcrumbs'][] = array(
 			'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('catalog/product', 'token=' . $this->session->data['token'] . $url, 'SSL'),       		
+			'href'      => $this->url->link('catalog/product', 'token=' . $this->session->data['token'], 'SSL'),
 			'separator' => ' :: '
 		);
 
@@ -375,16 +375,17 @@ class ControllerCatalogProduct extends Controller {
 			}
 
 			$this->data['products'][] = array(
-				'product_id' => $result['product_id'],
-				'name'       => $result['name'],
-				'model'      => $result['model'],
-				'price'      => $result['price'],
-				'special'    => $special,
-				'image'      => $image,
-				'quantity'   => $result['quantity'],
-				'status'     => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
-				'selected'   => isset($this->request->post['selected']) && in_array($result['product_id'], $this->request->post['selected']),
-				'action'     => $action
+				'product_id'   => $result['product_id'],
+				'weight_title' => $result['weight_title'],
+				'name'         => $result['name'],
+				'model'        => $result['model'],
+				'price'        => $result['price'],
+				'special'      => $special,
+				'image'        => $image,
+				'quantity'     => $result['quantity'],
+				'status'       => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
+				'selected'     => isset($this->request->post['selected']) && in_array($result['product_id'], $this->request->post['selected']),
+				'action'       => $action
 			);
 		}
 
@@ -407,6 +408,9 @@ class ControllerCatalogProduct extends Controller {
 		$this->data['button_insert'] = $this->language->get('button_insert');		
 		$this->data['button_delete'] = $this->language->get('button_delete');		
 		$this->data['button_filter'] = $this->language->get('button_filter');
+		$this->data['button_clear_filter'] = $this->language->get('button_clear_filter');
+
+        $this->data['clear_filter'] = $this->url->link('catalog/product', 'token=' . $this->session->data['token'], 'SSL');
 
 		$this->data['token'] = $this->session->data['token'];
 
