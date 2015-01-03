@@ -1,6 +1,8 @@
 #config file
 /config.php
+/config2.php
 /admin/config.php
+/admin/config2.php
 
 #blog section
 /blog/
