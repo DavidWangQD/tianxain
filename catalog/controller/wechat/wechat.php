@@ -9,6 +9,7 @@ class ControllerWechatWechat extends Controller
     private $appId = 'wx6262d90f286743c3';
     private $appSecret = 'd641490c7db8fe02238ed38e0579d314 ';
     private $storeId = 0;
+    private $token;
  /*
   * index方法是获取acces_stoken 来创建自定义菜单
   * 	获取token值 以便添加自定义菜单
@@ -24,6 +25,14 @@ class ControllerWechatWechat extends Controller
             }
         }
 
+        $this->load->model('wechat/wechat');
+
+        $this->getToken();
+
+        var_dump($HTTP_RAW_POST_DATA);exit();
+
+
+
 //			$access_token = $this->getToken();
 //    		$url = 'https://api.weixin.qq.com/cgi-bin/menu/create?access_token=' . $access_token;
 //    		$query = $this->createMenu();
@@ -34,16 +43,73 @@ class ControllerWechatWechat extends Controller
 //    		//echo json_encode($res);
     }
     
-    public function getToken()
-    {
-    	$log = new Log('weixin.txt');
-    	$url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=' . $this->appId . '&secret=' . $this->appSecret;
-    	$param = '';
-    	$res = $this->httpRequest($url, $param, 'get');
-    	return $res->access_token;
+    private function getToken() {
+
+        $currentTimeStamp = time();
+
+        $result = $this->model_wechat_wechat->getToken();
+
+        if(empty($result)) {
+
+            $url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=' . APP_ID . '&secret=' . APP_SECRET;
+
+            $response = $this->httpRequest($url);
+
+            if(is_object($response) && property_exists($response,'access_token') && !empty($response->access_token)) {
+
+                $insertResult = $this->model_wechat_wechat->insertToken($currentTimeStamp,$response->access_token);
+
+                if(!$insertResult) {
+
+                    die('Error: There is something wrong when inserting token.');
+
+                }
+
+            } else {
+
+                die('Error: There is something wrong when getting token.');
+
+            }
+
+        } elseif(!empty($result['timestamp']) && !empty($result['token']) && is_numeric($result['timestamp']) && ($currentTimeStamp - (int)$result['timestamp'] < 7000)) {
+
+            $this->token = $result['token'];
+
+        } else {
+
+            if(!empty($result['id'])) {
+
+                $url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=' . APP_ID . '&secret=' . APP_SECRET;
+
+                $response = $this->httpRequest($url);
+
+                if(is_object($response) && property_exists($response,'access_token') && !empty($response->access_token)) {
+
+                    $updateResult = $this->model_wechat_wechat->updateToken($result['id'], $currentTimeStamp, $response->access_token);
+
+                    if(!$updateResult) {
+
+                        die('Error: There is something wrong when updating token.');
+
+                    }
+
+                } else {
+
+                    die('Error: There is something wrong when getting token.');
+
+                }
+
+            } else {
+
+                die('Error: There is something wrong when updating token.');
+
+            }
+
+        }
+
     }
     
-    private function httpRequest($url, $query, $type = 'get')
+    private function httpRequest($url, $query = '', $type = 'get')
     {
     	//global $log;
     	$log = new Log('weixin.txt');
