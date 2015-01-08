@@ -29,9 +29,7 @@ class ControllerWechatWechat extends Controller
 
         $this->getToken();
 
-        var_dump($HTTP_RAW_POST_DATA);exit();
-
-
+        $this->getContents();
 
 //			$access_token = $this->getToken();
 //    		$url = 'https://api.weixin.qq.com/cgi-bin/menu/create?access_token=' . $access_token;
@@ -42,7 +40,7 @@ class ControllerWechatWechat extends Controller
 //    		$res = $this->httpRequest($url, $query, 'post');
 //    		//echo json_encode($res);
     }
-    
+
     private function getToken() {
 
         $currentTimeStamp = time();
@@ -108,7 +106,21 @@ class ControllerWechatWechat extends Controller
         }
 
     }
-    
+
+    private function getContents() {
+
+        $postObject = simplexml_load_string(file_get_contents("php://input"));
+
+        if(is_object($postObject) && !empty($postObject)) {
+
+            $this->log->write($postObject->MsgId);
+            $this->log->write($postObject->Content);
+
+        }
+
+    }
+
+
     private function httpRequest($url, $query = '', $type = 'get')
     {
     	//global $log;
