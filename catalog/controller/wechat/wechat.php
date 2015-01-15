@@ -109,12 +109,12 @@ class ControllerWechatWechat extends Controller
 
     private function getContents() {
 
-        $postObject = simplexml_load_string(file_get_contents("php://input"));
+        $postObject = simplexml_load_string(file_get_contents("php://input"), 'SimpleXMLElement', LIBXML_NOCDATA);
 
         if(is_object($postObject) && !empty($postObject)) {
 
-            $this->log->write($postObject->MsgId);
-            $this->log->write($postObject->Content);
+            $this->log->write(var_export($postObject,true));
+//            $this->log->write($postObject->Content);
 
         }
 

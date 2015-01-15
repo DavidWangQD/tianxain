@@ -1,13 +1,18 @@
 <?php 
 class ControllerProductCategory extends Controller {  
-	public function index() { 
-		$this->language->load('product/category');
+	public function index() {
+
+        $this->document->setTitle("天线果盟, 鲜果配送");
+
+        $this->load->model('tool/image');
+
+        $this->data['img'] = $this->model_tool_image->resizeNoBlank('watermelon.png', 180, 180);
+
+		/*$this->language->load('product/category');
 
 		$this->load->model('catalog/category');
 
 		$this->load->model('catalog/product');
-
-		$this->load->model('tool/image'); 
 
 		if (isset($this->request->get['filter'])) {
 			$filter = $this->request->get['filter'];
@@ -439,10 +444,10 @@ class ControllerProductCategory extends Controller {
 
 			$this->response->addHeader($this->request->server['SERVER_PROTOCOL'] . '/1.1 404 Not Found');
 
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/error/not_found.tpl')) {
-				$this->template = $this->config->get('config_template') . '/template/error/not_found.tpl';
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/product/category.tpl')) {
+				$this->template = $this->config->get('config_template') . '/template/product/category.tpl';
 			} else {
-				$this->template = 'default/template/error/not_found.tpl';
+				$this->template = 'default/template/product/category.tpl';
 			}
 
 			$this->children = array(
@@ -455,7 +460,22 @@ class ControllerProductCategory extends Controller {
 			);
 
 			$this->response->setOutput($this->render());
-		}
+		}*/
+
+
+        if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/product/category.tpl')) {
+            $this->template = $this->config->get('config_template') . '/template/product/category.tpl';
+        } else {
+            $this->template = 'default/template/product/category.tpl';
+        }
+
+        $this->children = array(
+            'common/footer',
+            'common/header'
+        );
+
+        $this->response->setOutput($this->render());
+
 	}
 }
 ?>
