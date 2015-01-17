@@ -44,7 +44,7 @@ $_['entry_manufacturer']         = '&nbsp;&nbsp;商品品牌：';
 $_['entry_manufacturer']         = '商品品牌：<br /><span class="帮助">(自动完成)</span>';
 $_['entry_shipping']             = '&nbsp;&nbsp;要求配送：'; 
 $_['entry_date_available']       = '&nbsp;&nbsp;供货日期：';
-$_['entry_quantity']             = '&nbsp;&nbsp;商品数量：';
+$_['entry_quantity']             = '&nbsp;&nbsp;库存：';
 $_['entry_minimum']              = '&nbsp;&nbsp;最小起订量：<br/><span class="help">最小订单数据</span>';
 $_['entry_stock_status']         = '&nbsp;&nbsp;库存状况：<br/><span class="help">显示当一个产品没有存货时的状态</span>';
 $_['entry_price']                = '&nbsp;&nbsp;销售价格：';

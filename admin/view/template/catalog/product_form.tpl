@@ -103,7 +103,11 @@
             </tr>
             <tr>
                 <td><?php echo $entry_price; ?></td>
-                <td><input type="text" name="price" value="<?php echo $price; ?>" />&nbsp;&nbsp;<b>元</b></td>
+                <td><input type="text" name="price" value="<?php echo $price; ?>" />&nbsp;&nbsp;<b>元 / <span class="weight_class"></span></b></td>
+            </tr>
+            <tr>
+                <td><?php echo $entry_quantity; ?></td>
+                <td><input type="text" name="quantity" value="<?php echo $quantity; ?>" size="2" />&nbsp;&nbsp;<b><span class="weight_class"></span></b></td>
             </tr>
             <tr>
                 <td><?php echo $entry_weight_class; ?></td>
@@ -117,26 +121,22 @@
                         <?php } ?>
                     </select></td>
             </tr>
-            <tr>
+            <tr style="display: none;">
                 <td><?php echo $entry_weight; ?></td>
                 <td><input type="text" name="weight" value="<?php echo $weight; ?>" /></td>
             </tr>
             <tr style="display: none;">
-              <td><?php echo $entry_tax_class; ?></td>
-              <td><select name="tax_class_id">
-                  <option value="0"><?php echo $text_none; ?></option>
-                  <?php foreach ($tax_classes as $tax_class) { ?>
-                  <?php if ($tax_class['tax_class_id'] == $tax_class_id) { ?>
-                  <option value="<?php echo $tax_class['tax_class_id']; ?>" selected="selected"><?php echo $tax_class['title']; ?></option>
-                  <?php } else { ?>
-                  <option value="<?php echo $tax_class['tax_class_id']; ?>"><?php echo $tax_class['title']; ?></option>
-                  <?php } ?>
-                  <?php } ?>
-                </select></td>
-            </tr>
-            <tr>
-              <td><?php echo $entry_quantity; ?></td>
-              <td><input type="text" name="quantity" value="<?php echo $quantity; ?>" size="2" /></td>
+                <td><?php echo $entry_tax_class; ?></td>
+                <td><select name="tax_class_id">
+                        <option value="0"><?php echo $text_none; ?></option>
+                        <?php foreach ($tax_classes as $tax_class) { ?>
+                        <?php if ($tax_class['tax_class_id'] == $tax_class_id) { ?>
+                        <option value="<?php echo $tax_class['tax_class_id']; ?>" selected="selected"><?php echo $tax_class['title']; ?></option>
+                        <?php } else { ?>
+                        <option value="<?php echo $tax_class['tax_class_id']; ?>"><?php echo $tax_class['title']; ?></option>
+                        <?php } ?>
+                        <?php } ?>
+                    </select></td>
             </tr>
             <tr>
               <td><?php echo $entry_minimum; ?></td>
@@ -1382,5 +1382,21 @@ function addProfile() {
 <?php } ?>
 
 //--></script>
+<!-- added for tianxian -->
+<script type="text/javascript">
 
+    $(function(){
+
+        $("select[name='weight_class_id']").click(function(){
+
+            $(".weight_class").text($("select[name='weight_class_id'] option:selected").text());
+
+        });
+
+        $("select[name='weight_class_id']").trigger('click');
+
+    });
+
+</script>
+<!-- added for tianxian end -->
 <?php echo $footer; ?>
