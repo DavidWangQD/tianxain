@@ -807,5 +807,26 @@ class ControllerCheckoutCart extends Controller {
 
 		$this->response->setOutput(json_encode($json));
 	}
+
+    public function update() {
+
+        $response = array(
+            'status'      =>  0,
+            'cart_total'  =>  0,
+        );
+
+        if(isset($this->request->post['product_id']) && isset($this->request->post['num'])) {
+
+            $this->cart->update($this->request->post['product_id'], $this->request->post['num']);
+
+            $response['status'] = 1;
+            $response['cart_total'] = $this->cart->getSubTotal();
+
+        }
+
+        die(json_encode($response));
+
+    }
+
 }
 ?>

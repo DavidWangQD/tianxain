@@ -180,3 +180,8 @@ function addToCompare(product_id) {
 		}
 	});
 }
+
+function isFunction(functionToCheck) {
+    var getType = {};
+    return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
+}

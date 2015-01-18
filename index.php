@@ -110,8 +110,9 @@ function error_handler($errno, $errstr, $errfile, $errline) {
 }
 
 // Error Handler
-set_error_handler('error_handler');
-
+//set_error_handler('error_handler');
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 // Request
 $request = new Request();
 $registry->set('request', $request);
